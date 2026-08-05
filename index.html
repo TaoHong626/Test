@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Simulación Administración del Estado C1</title>
+    <link rel="preload" href="simulacion.js" as="script">
+    <link rel="preload" href="simulacion.wasm" as="fetch" type="application/wasm" crossorigin>
+    <link rel="preload" href="simulacion.data" as="fetch" crossorigin>
+    <style>
+        html, body { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #f5f6f7; overflow: hidden; display: flex; justify-content: center; align-items: center; font-family: Arial, sans-serif; touch-action: none; }
+        #canvas { display: block; width: 100%; height: 100%; max-width: 100%; max-height: 100%; background-color: #f5f6f7; opacity: 0; transition: opacity 0.1s ease-in-out; touch-action: none; outline: none; -webkit-tap-highlight-color: transparent; }
+        #canvas.visible { opacity: 1; }
+        #loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #333; font-family: Arial, sans-serif; font-size: 18px; text-align: center; z-index: 100; }
+        .spinner { border: 4px solid #333; border-top: 4px solid #081224; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
+        #mobile-keyboard-hack { position: fixed; top: -9999px; left: -9999px; width: 0; height: 0; opacity: 0; border: none; outline: none; pointer-events: none; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div id="loading"><div class="spinner"></div><p>Cargando simulación...</p></div>
+    <canvas id="canvas"></canvas>
+    <input id="mobile-keyboard-hack" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+
+    <script type="text/javascript">
+        var canvas = document.getElementById('canvas');
+        var dpr = window.devicePixelRatio || 1;
+        var wasmReady = false;
+        var imguiReady = false;
+        var resizeTimeout = null;
+        var lastWidth = 0;
+        var lastHeight = 0;
+        var lastTouchY = 0;
+        var lastTouchX = 0;
+
+        if (!document.exitPointerLock) document.exitPointerLock = function() {};
+        if (!document.requestPointerLock) document.requestPointerLock = function() {};
+        if (!Element.prototype.requestPointerLock) Element.prototype.requestPointerLock = function() {};
+        if (!Element.prototype.exitPointerLock) Element.prototype.exitPointerLock = function() {};
+
+        function updateCanvas(force) {
+            var rect = canvas.getBoundingClientRect();
+            var newWidth = Math.floor(rect.width * dpr);
+            var newHeight = Math.floor(rect.height * dpr);
+            if (!force && lastWidth === newWidth && lastHeight === newHeight) return;
+            lastWidth = newWidth;
+            lastHeight = newHeight;
+            canvas.width = newWidth;
+            canvas.height = newHeight;
+            if (wasmReady && imguiReady && Module.ccall) {
+                try {
+                    Module.ccall('Safe_ImGui_ImplGlfw_SetDisplaySize', 'void', ['number', 'number'], [rect.width, rect.height]);
+                    Module.ccall('Safe_ImGui_ImplGlfw_SetFramebufferScale', 'void', ['number', 'number'], [dpr, dpr]);
+                } catch (error) {
+                    console.error('Failed to update ImGui display size:', error);
+                }
+            }
+        }
+
+        function handleResize() {
+            if (resizeTimeout) clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() { updateCanvas(false); }, 100);
+        }
+        window.addEventListener('resize', handleResize);
+        window.addEventListener('orientationchange', handleResize);
+
+        canvas.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            if (wasmReady && imguiReady && Module.ccall) {
+                try {
+                    var smoothFactor = 0.02;
+                    var xoffset = e.deltaX * smoothFactor;
+                    var yoffset = -e.deltaY * smoothFactor;
+                    var maxScroll = 2.0;
+                    xoffset = Math.max(-maxScroll, Math.min(maxScroll, xoffset));
+                    yoffset = Math.max(-maxScroll, Math.min(maxScroll, yoffset));
+                    Module.ccall('Safe_ImGui_ImplGlfw_ScrollWheel', 'void', ['number', 'number'], [xoffset, yoffset]);
+                } catch (err) {}
+            }
+        }, { passive: false });
+
+        function sendSyntheticMouse(type, touch) {
+            var mouseEvent = new MouseEvent(type, {
+                clientX: touch.clientX,
+                clientY: touch.clientY,
+                button: 0,
+                buttons: type === 'mouseup' ? 0 : 1,
+                bubbles: true,
+                cancelable: true,
+                view: window
+            });
+            canvas.dispatchEvent(mouseEvent);
+        }
+
+        canvas.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            lastTouchY = e.touches[0].clientY;
+            lastTouchX = e.touches[0].clientX;
+            if (e.touches.length > 0) {
+                sendSyntheticMouse('mousemove', e.touches[0]);
+                sendSyntheticMouse('mousedown', e.touches[0]);
+            }
+        }, { passive: false, capture: true });
+
+        canvas.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            if (e.touches.length > 0) {
+                var currentY = e.touches[0].clientY;
+                var currentX = e.touches[0].clientX;
+                var deltaY = currentY - lastTouchY;
+                var deltaX = currentX - lastTouchX;
+                
+                if (Math.abs(deltaY) > Math.abs(deltaX)) {
+                    if (wasmReady && imguiReady && Module.ccall) {
+                        try {
+                            var smoothFactor = 0.05;
+                            var scrollY = deltaY * smoothFactor;
+                            var maxScroll = 2.0;
+                            scrollY = Math.max(-maxScroll, Math.min(maxScroll, scrollY));
+                            Module.ccall('Safe_ImGui_ImplGlfw_ScrollWheel', 'void', ['number', 'number'], [0, scrollY]);
+                        } catch (err) {}
+                    }
+                } else {
+                    sendSyntheticMouse('mousemove', e.touches[0]);
+                }
+                
+                lastTouchY = currentY;
+                lastTouchX = currentX;
+            }
+        }, { passive: false, capture: true });
+
+        canvas.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            if (e.changedTouches.length > 0) {
+                sendSyntheticMouse('mouseup', e.changedTouches[0]);
+                if (wasmReady && imguiReady && Module.ccall) {
+                    var wantsInput = Module.ccall('Safe_ImGui_WantTextInput', 'boolean', [], []);
+                    wantsInput ? focusInput() : blurInput();
+                }
+            }
+        }, { passive: false, capture: true });
+
+        canvas.addEventListener('touchcancel', function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            if (e.changedTouches.length > 0) {
+                sendSyntheticMouse('mouseup', e.changedTouches[0]);
+            }
+        }, { passive: false, capture: true });
+
+        function notifyImGuiReady() {
+            imguiReady = true;
+            updateCanvas(true);
+        }
+
+        var hiddenInput = document.getElementById('mobile-keyboard-hack');
+
+        // 设置输入事件监听器（按平台区分处理）
+        function setupInputListeners() {
+            if (!hiddenInput) return;
+
+            // 检测是否为 Android
+            var isAndroid = /Android/i.test(navigator.userAgent);
+            
+            if (isAndroid) {
+                // Android：使用 input 事件处理普通输入
+                hiddenInput.addEventListener('input', function(e) {
+                    var text = e.target.value;
+                    if (text && Module._ImGui_InjectChar) {
+                        for (var i = 0; i < text.length; i++) {
+                            Module._ImGui_InjectChar(text.charCodeAt(i));
+                        }
+                        e.target.value = '';
+                    }
+                });
+            }
+
+            // 处理控制键（Backspace/Enter）
+            hiddenInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace') {
+                    if (Module._ImGui_InjectChar) {
+                        Module._ImGui_InjectChar(8);
+                    }
+                    e.preventDefault();
+                    e.stopPropagation();
+                } else if (e.key === 'Enter') {
+                    if (Module._ImGui_InjectChar) {
+                        Module._ImGui_InjectChar(13);
+                    }
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                // 数字/字母：PC/iOS 由 Emscripten 默认处理，Android 由 input 事件处理
+            });
+        }
+
+        function focusInput() { 
+            if (hiddenInput) hiddenInput.focus(); 
+        }
+        function blurInput() { 
+            if (hiddenInput) { 
+                hiddenInput.blur(); 
+                hiddenInput.value = '';
+            }
+        }
+
+        var questionManifestPromise = null;
+        var loadedQuestionPaths = new Map();
+        var lastExamShardPaths = null;
+        var practiceShardBags = new Map();
+        var maxCachedQuestionShards = 8;
+        var maxConcurrentQuestionDownloads = 3;
+        var storageDatabasePromise = null;
+
+        function normalizeHistoryJson(value) {
+            try {
+                var parsed = JSON.parse(value || '[]');
+                return Array.isArray(parsed) ? JSON.stringify(parsed) : '[]';
+            } catch (error) {
+                console.error('Stored history is invalid and was ignored:', error);
+                return '[]';
+            }
+        }
+
+        function openStorageDatabase() {
+            if (!window.indexedDB) {
+                return Promise.reject(new Error('IndexedDB is unavailable.'));
+            }
+            if (!storageDatabasePromise) {
+                storageDatabasePromise = new Promise(function(resolve, reject) {
+                    var request = indexedDB.open('simulacion_c1_storage', 1);
+                    request.onupgradeneeded = function() {
+                        var database = request.result;
+                        if (!database.objectStoreNames.contains('application')) {
+                            database.createObjectStore('application');
+                        }
+                    };
+                    request.onsuccess = function() {
+                        resolve(request.result);
+                    };
+                    request.onerror = function() {
+                        reject(request.error || new Error('IndexedDB open failed.'));
+                    };
+                });
+            }
+            return storageDatabasePromise;
+        }
+
+        async function readHistoryFromIndexedDb() {
+            var database = await openStorageDatabase();
+            return new Promise(function(resolve, reject) {
+                var transaction = database.transaction('application', 'readonly');
+                var request = transaction.objectStore('application').get('history');
+                request.onsuccess = function() {
+                    resolve(typeof request.result === 'string' ? request.result : null);
+                };
+                request.onerror = function() {
+                    reject(request.error || new Error('History read failed.'));
+                };
+            });
+        }
+
+        async function writeHistoryToIndexedDb(value) {
+            var database = await openStorageDatabase();
+            return new Promise(function(resolve, reject) {
+                var transaction = database.transaction('application', 'readwrite');
+                transaction.objectStore('application').put(value, 'history');
+                transaction.oncomplete = function() { resolve(); };
+                transaction.onerror = function() {
+                    reject(transaction.error || new Error('History write failed.'));
+                };
+                transaction.onabort = transaction.onerror;
+            });
+        }
+
+        async function initializeHistoryStorage() {
+            var legacyValue = localStorage.getItem('simulacion_c1_history');
+            try {
+                var storedValue = await readHistoryFromIndexedDb();
+                var historyValue = normalizeHistoryJson(
+                    storedValue === null ? legacyValue : storedValue);
+                if (storedValue === null) {
+                    await writeHistoryToIndexedDb(historyValue);
+                }
+                Module.historyStorageCache = historyValue;
+                if (legacyValue !== null) {
+                    localStorage.removeItem('simulacion_c1_history');
+                }
+            } catch (error) {
+                console.error('IndexedDB history initialization failed:', error);
+                Module.historyStorageCache = normalizeHistoryJson(legacyValue);
+            }
+        }
+
+        async function persistHistoryData(value) {
+            var normalized = normalizeHistoryJson(value);
+            Module.historyStorageCache = normalized;
+            try {
+                await writeHistoryToIndexedDb(normalized);
+            } catch (error) {
+                console.error('IndexedDB history write failed:', error);
+                throw error;
+            }
+        }
+
+        function getQuestionManifest() {
+            if (!questionManifestPromise) {
+                questionManifestPromise = fetch('questions/manifest.json', {
+                    cache: 'no-cache'
+                }).then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('No se pudo cargar el manifiesto de preguntas.');
+                    }
+                    return response.json();
+                });
+            }
+            return questionManifestPromise;
+        }
+
+        function randomIndex(limit) {
+            if (limit <= 1) return 0;
+            if (window.crypto && window.crypto.getRandomValues) {
+                var value = new Uint32Array(1);
+                window.crypto.getRandomValues(value);
+                return Math.floor((value[0] / 4294967296) * limit);
+            }
+            return Math.floor(Math.random() * limit);
+        }
+
+        function shufflePaths(paths) {
+            var shuffled = paths.slice();
+            for (var index = shuffled.length - 1; index > 0; index--) {
+                var swapIndex = randomIndex(index + 1);
+                var temporary = shuffled[index];
+                shuffled[index] = shuffled[swapIndex];
+                shuffled[swapIndex] = temporary;
+            }
+            return shuffled;
+        }
+
+        function drawPracticeShards(matching, bagKey, limit) {
+            var paths = matching.map(function(shard) { return shard.path; });
+            var signature = paths.join('|');
+            var state = practiceShardBags.get(bagKey);
+            if (!state || state.signature !== signature) {
+                state = {
+                    signature: signature,
+                    remaining: [],
+                    lastPath: null
+                };
+                practiceShardBags.set(bagKey, state);
+            }
+
+            var selectedPaths = [];
+            while (selectedPaths.length < limit) {
+                if (!state.remaining.length) {
+                    state.remaining = shufflePaths(paths);
+                    if (state.lastPath &&
+                        state.remaining.length > 1 &&
+                        state.remaining[0] === state.lastPath) {
+                        var swapIndex = 1 + randomIndex(state.remaining.length - 1);
+                        var temporary = state.remaining[0];
+                        state.remaining[0] = state.remaining[swapIndex];
+                        state.remaining[swapIndex] = temporary;
+                    }
+                }
+
+                var nextPath = state.remaining.shift();
+                if (selectedPaths.indexOf(nextPath) !== -1 &&
+                    selectedPaths.length < paths.length) {
+                    continue;
+                }
+                selectedPaths.push(nextPath);
+                state.lastPath = nextPath;
+            }
+
+            return selectedPaths.map(function(path) {
+                return matching.find(function(shard) {
+                    return shard.path === path;
+                });
+            });
+        }
+
+        function selectQuestionShards(manifest, moduleIndex, difficultyIndex, requestMode) {
+            var difficulties = ['Facil', 'Medio', 'Dificil'];
+            if (requestMode === 3) {
+                var savedSelection = null;
+                try {
+                    savedSelection = JSON.parse(
+                        localStorage.getItem('simulacion_c1_exam_shards') || 'null');
+                } catch (error) {
+                    console.error('Saved exam shard selection is invalid:', error);
+                }
+                var savedPaths =
+                    savedSelection &&
+                    savedSelection.bankVersion === manifest.bankVersion &&
+                    Array.isArray(savedSelection.paths)
+                        ? savedSelection.paths
+                        : lastExamShardPaths;
+                if (!savedPaths || !savedPaths.length) {
+                    throw new Error('No se encontró la selección del examen guardado.');
+                }
+
+                var allShards = [];
+                manifest.modules.forEach(function(module) {
+                    allShards = allShards.concat(module.shards);
+                });
+                var restored = savedPaths.map(function(path) {
+                    return allShards.find(function(shard) {
+                        return shard.path === path;
+                    });
+                });
+                if (restored.some(function(shard) { return !shard; })) {
+                    throw new Error('El banco guardado ya no coincide con el manifiesto.');
+                }
+                lastExamShardPaths = savedPaths.slice();
+                return restored;
+            }
+
+            if (requestMode === 1) {
+                var selectedModule = manifest.modules.find(function(module) {
+                    return module.index === moduleIndex;
+                });
+                if (!selectedModule) {
+                    throw new Error('El bloque seleccionado no existe en el manifiesto.');
+                }
+                var matching = selectedModule.shards.filter(function(shard) {
+                    return shard.difficulty === difficulties[difficultyIndex];
+                });
+                if (!matching.length) {
+                    throw new Error('No hay preguntas para el bloque y nivel seleccionados.');
+                }
+                var limit = 1;
+                var bagKey = selectedModule.id + ':' + difficulties[difficultyIndex];
+                return drawPracticeShards(matching, bagKey, limit);
+            }
+
+            var examShards = [];
+            manifest.modules.forEach(function(module) {
+                var matching = module.shards.filter(function(shard) {
+                    return shard.difficulty === difficulties[difficultyIndex];
+                });
+                if (!matching.length) {
+                    throw new Error(
+                        'No hay preguntas del nivel seleccionado para ' +
+                        module.name + '.');
+                }
+                examShards.push(matching[randomIndex(matching.length)]);
+            });
+            lastExamShardPaths = examShards.map(function(shard) {
+                return shard.path;
+            });
+            localStorage.setItem(
+                'simulacion_c1_exam_shards',
+                JSON.stringify({
+                    bankVersion: manifest.bankVersion,
+                    paths: lastExamShardPaths
+                }));
+            return examShards;
+        }
+
+        function sha256Hex(bytes) {
+            if (!window.crypto || !window.crypto.subtle) {
+                return Promise.resolve(null);
+            }
+            return window.crypto.subtle.digest('SHA-256', bytes).then(function(hash) {
+                return Array.from(new Uint8Array(hash)).map(function(value) {
+                    return value.toString(16).padStart(2, '0');
+                }).join('');
+            });
+        }
+
+        async function loadShardIntoVfs(shard, bankVersion) {
+            var cacheKey = bankVersion + ':' + shard.path;
+            if (loadedQuestionPaths.has(cacheKey)) {
+                var cached = loadedQuestionPaths.get(cacheKey);
+                cached.lastUsed = Date.now();
+                return cached.path;
+            }
+
+            var separator = shard.path.indexOf('?') === -1 ? '?' : '&';
+            var url = shard.path + separator + 'v=' + encodeURIComponent(bankVersion);
+            var response = await fetch(url, { cache: 'default' });
+            if (!response.ok) {
+                throw new Error('No se pudo descargar ' + shard.path + '.');
+            }
+            var bytes = await response.arrayBuffer();
+            var actualHash = await sha256Hex(bytes);
+            if (actualHash && actualHash !== shard.sha256) {
+                throw new Error('La verificación SHA-256 falló para ' + shard.path + '.');
+            }
+
+            Module.FS.mkdirTree('/questions/runtime');
+            var filename = (bankVersion + '-' + shard.path)
+                .replace(/^questions\//, '')
+                .replace(/[^A-Za-z0-9_.-]/g, '-');
+            var vfsPath = '/questions/runtime/' + filename;
+            Module.FS.writeFile(vfsPath, new Uint8Array(bytes));
+            loadedQuestionPaths.set(cacheKey, {
+                path: vfsPath,
+                lastUsed: Date.now()
+            });
+            return vfsPath;
+        }
+
+        function pruneQuestionVfs(activeKeys) {
+            if (loadedQuestionPaths.size <= maxCachedQuestionShards) {
+                return;
+            }
+            var candidates = Array.from(loadedQuestionPaths.entries())
+                .filter(function(entry) {
+                    return !activeKeys.has(entry[0]);
+                })
+                .sort(function(left, right) {
+                    return left[1].lastUsed - right[1].lastUsed;
+                });
+
+            while (loadedQuestionPaths.size > maxCachedQuestionShards &&
+                   candidates.length) {
+                var entry = candidates.shift();
+                try {
+                    Module.FS.unlink(entry[1].path);
+                } catch (error) {
+                    console.warn('Failed to release cached question shard:', error);
+                }
+                loadedQuestionPaths.delete(entry[0]);
+            }
+        }
+
+        async function loadQuestionShards(shards, bankVersion) {
+            var paths = new Array(shards.length);
+            var nextIndex = 0;
+            var completed = 0;
+
+            async function worker() {
+                while (true) {
+                    var index = nextIndex++;
+                    if (index >= shards.length) {
+                        return;
+                    }
+                    paths[index] = await loadShardIntoVfs(
+                        shards[index],
+                        bankVersion);
+                    completed++;
+                    Module.ccall(
+                        'OnQuestionLoadProgress',
+                        'void',
+                        ['number', 'number'],
+                        [completed, shards.length]);
+                }
+            }
+
+            var workerCount = Math.min(
+                maxConcurrentQuestionDownloads,
+                shards.length);
+            var workers = [];
+            for (var index = 0; index < workerCount; index++) {
+                workers.push(worker());
+            }
+            await Promise.all(workers);
+
+            var activeKeys = new Set(shards.map(function(shard) {
+                return bankVersion + ':' + shard.path;
+            }));
+            pruneQuestionVfs(activeKeys);
+            return paths;
+        }
+
+        var Module = {
+            canvas: canvas,
+            historyStorageCache: '[]',
+            persistHistoryData: persistHistoryData,
+            setStatus: function() {},
+            onRuntimeInitialized: function() {
+                wasmReady = true;
+                setTimeout(function() { 
+                    document.getElementById('loading').style.display = 'none'; 
+                    canvas.classList.add('visible'); 
+                }, 50);
+                getQuestionManifest().catch(function() {
+                    questionManifestPromise = null;
+                });
+            },
+            print: function() {},
+            printErr: function(text) {
+                console.error(text);
+            },
+            loadQuestionSet: async function(moduleIndex, difficultyIndex, requestMode) {
+                var manifest = await getQuestionManifest();
+                var shards = selectQuestionShards(
+                    manifest, moduleIndex, difficultyIndex, requestMode);
+                var paths = await loadQuestionShards(
+                    shards,
+                    manifest.bankVersion);
+                Module.ccall(
+                    'OnQuestionFilesReady',
+                    'void',
+                    ['string', 'number'],
+                    [paths.join('|'), requestMode]);
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupInputListeners();
+            var rect = canvas.getBoundingClientRect();
+            var displayWidth = Math.floor(rect.width);
+            var displayHeight = Math.floor(rect.height);
+            if (displayWidth <= 0 || displayHeight <= 0) { 
+                displayWidth = 1280; 
+                displayHeight = 720; 
+            }
+            canvas.width = Math.floor(displayWidth * dpr); 
+            canvas.height = Math.floor(displayHeight * dpr);
+            window._initialWidth = displayWidth; 
+            window._initialHeight = displayHeight;
+            initializeHistoryStorage().finally(function() {
+                var script = document.createElement('script');
+                script.src = 'simulacion.js';
+                script.async = true;
+                document.body.appendChild(script);
+            });
+        });
+    </script>
+</body>
+</html>

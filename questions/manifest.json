@@ -1,0 +1,672 @@
+{
+  "schemaVersion": "1.0",
+  "bankVersion": "runtime-fe7d4e6aa445f800",
+  "generatedAt": "2026-08-05T07:30:42+00:00",
+  "shardSize": 1000,
+  "questionCount": 80000,
+  "modules": [
+    {
+      "id": "OrgEstado",
+      "index": 0,
+      "name": "Organización del Estado y de la Administración pública",
+      "questionCount": 7200,
+      "reviewStatus": "auto_validated",
+      "shards": [
+        {
+          "path": "questions/OrgEstado/Facil-0001.json",
+          "difficulty": "Facil",
+          "questionCount": 1000,
+          "bytes": 4218888,
+          "sha256": "da243193ad42519422c18e513c124f06e23d55d71ef97b0fa48a428741f5788b"
+        },
+        {
+          "path": "questions/OrgEstado/Facil-0002.json",
+          "difficulty": "Facil",
+          "questionCount": 800,
+          "bytes": 3731343,
+          "sha256": "7dcd40805bf598456a89b2592da5108befb480decd3d1f8fb500d52c694a6a60"
+        },
+        {
+          "path": "questions/OrgEstado/Medio-0001.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 3943339,
+          "sha256": "cfd1e73d8e36aedb9b6ddc1e1f5747186613e9f9c5e95a71a1d33c6c4847e12a"
+        },
+        {
+          "path": "questions/OrgEstado/Medio-0002.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4278994,
+          "sha256": "827d96703d78265f9d430918230c14ccf1169fdc2e1c2235e968afaaeb358b3e"
+        },
+        {
+          "path": "questions/OrgEstado/Medio-0003.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4570551,
+          "sha256": "3e4210debe04540a42ee89fa26aad42b62a26624ec6c59be5dcf9d4c6becabe5"
+        },
+        {
+          "path": "questions/OrgEstado/Medio-0004.json",
+          "difficulty": "Medio",
+          "questionCount": 600,
+          "bytes": 2787642,
+          "sha256": "e42e963b54755d4328fcc4405e8131f1d8472d214a070b513eec23c107e5b966"
+        },
+        {
+          "path": "questions/OrgEstado/Dificil-0001.json",
+          "difficulty": "Dificil",
+          "questionCount": 1000,
+          "bytes": 4170013,
+          "sha256": "316a315b3a5fbffcd68d3ea0a8e7db274a14c2d72d9d33a18a82fd14aeec964f"
+        },
+        {
+          "path": "questions/OrgEstado/Dificil-0002.json",
+          "difficulty": "Dificil",
+          "questionCount": 800,
+          "bytes": 3604354,
+          "sha256": "037df3f6d5f7bed00f65a4f05cb812eb9c44b9a0be668be7bc4c3845bfd4b341"
+        }
+      ]
+    },
+    {
+      "id": "Oficinas",
+      "index": 1,
+      "name": "Organización de oficinas públicas",
+      "questionCount": 11200,
+      "reviewStatus": "auto_validated",
+      "shards": [
+        {
+          "path": "questions/Oficinas/Facil-0001.json",
+          "difficulty": "Facil",
+          "questionCount": 1000,
+          "bytes": 5300644,
+          "sha256": "90fbcb5b7cda0c9b826fff25a2c7b1e4218feae5c5334e6c0922313aaffe866e"
+        },
+        {
+          "path": "questions/Oficinas/Facil-0002.json",
+          "difficulty": "Facil",
+          "questionCount": 1000,
+          "bytes": 5218080,
+          "sha256": "d8e0ed0a81ca1d2759b7d5b8a06863d4248fce7854c2f1e5906dbe36e017af7c"
+        },
+        {
+          "path": "questions/Oficinas/Facil-0003.json",
+          "difficulty": "Facil",
+          "questionCount": 800,
+          "bytes": 4429360,
+          "sha256": "df01c1c1e4b04b04a763aeef83d49b7fb63341f7d9f2875e0025e59e430eb2ba"
+        },
+        {
+          "path": "questions/Oficinas/Medio-0001.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4901257,
+          "sha256": "bf2ba4a19f4d80f5e6f9d7f602f8c8a55bbba0f29f364000e018f9791d5201e2"
+        },
+        {
+          "path": "questions/Oficinas/Medio-0002.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 5096953,
+          "sha256": "7bb5648d6cbcbb28deb26d5e4064f50e0ade0bbff4a009fcc578b7ebcf520754"
+        },
+        {
+          "path": "questions/Oficinas/Medio-0003.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 5059257,
+          "sha256": "bd599a615ef9ce9a0ccd8ea0157e44257b34ee10962461f7c7d44eac25807474"
+        },
+        {
+          "path": "questions/Oficinas/Medio-0004.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 5040537,
+          "sha256": "24ae4b074df4bde15a4bb0904fb8422dcb04ace3af131d743310fef6ee8eed25"
+        },
+        {
+          "path": "questions/Oficinas/Medio-0005.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 5263274,
+          "sha256": "cdfea23ee187c02edbdda96bf8746690d2fb30cd85af3ef56298397acdd9a1e8"
+        },
+        {
+          "path": "questions/Oficinas/Medio-0006.json",
+          "difficulty": "Medio",
+          "questionCount": 600,
+          "bytes": 3268679,
+          "sha256": "b8d26c7f05c12f96794750af4bbffb54f133d1f5ad595706d8f579d15377d839"
+        },
+        {
+          "path": "questions/Oficinas/Dificil-0001.json",
+          "difficulty": "Dificil",
+          "questionCount": 1000,
+          "bytes": 5091484,
+          "sha256": "f956f40bd4b8bc6bb5c61a6bdb1896e87ee5be705950c76b60060d9e30e3a768"
+        },
+        {
+          "path": "questions/Oficinas/Dificil-0002.json",
+          "difficulty": "Dificil",
+          "questionCount": 1000,
+          "bytes": 4995063,
+          "sha256": "aab691045d234da25a69be7ee8bcf6cf6ce1c638a0e36fc719959191d3897bb2"
+        },
+        {
+          "path": "questions/Oficinas/Dificil-0003.json",
+          "difficulty": "Dificil",
+          "questionCount": 800,
+          "bytes": 4189549,
+          "sha256": "03f2ae0c6019e08b52e8b2b0b09107b305d9f9ae41b5fccf3059da559980857b"
+        }
+      ]
+    },
+    {
+      "id": "DerechoAdmin",
+      "index": 2,
+      "name": "Derecho administrativo general",
+      "questionCount": 13600,
+      "reviewStatus": "auto_validated",
+      "shards": [
+        {
+          "path": "questions/DerechoAdmin/Facil-0001.json",
+          "difficulty": "Facil",
+          "questionCount": 1000,
+          "bytes": 4738417,
+          "sha256": "6266e4ba336ae985f726fb0731f5b8383b7159a489bdd48392d0205c9308e737"
+        },
+        {
+          "path": "questions/DerechoAdmin/Facil-0002.json",
+          "difficulty": "Facil",
+          "questionCount": 1000,
+          "bytes": 4901274,
+          "sha256": "2003bb43e09aa4fdbb912ba6ecc80e151b7e81baaa118c4bc9fd1dc3c91d4181"
+        },
+        {
+          "path": "questions/DerechoAdmin/Facil-0003.json",
+          "difficulty": "Facil",
+          "questionCount": 1000,
+          "bytes": 4753708,
+          "sha256": "e4106cb6fb00650956975cb97d103bcea1494526013f81f63752ccec8a61d5a1"
+        },
+        {
+          "path": "questions/DerechoAdmin/Facil-0004.json",
+          "difficulty": "Facil",
+          "questionCount": 400,
+          "bytes": 1861807,
+          "sha256": "15791ed4ca713d26c1ecad258eb2f54ece1d159f2a38c4d65f010a71d5450df2"
+        },
+        {
+          "path": "questions/DerechoAdmin/Medio-0001.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4474770,
+          "sha256": "8d2c689c37a50d8061b4ccaa41967700e10a014157414b02562f99c3602720a1"
+        },
+        {
+          "path": "questions/DerechoAdmin/Medio-0002.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4595225,
+          "sha256": "1fbd4c4232b61955c5f96fd052647a75b6df0a069f1dc2a4345a232dd4d73b8a"
+        },
+        {
+          "path": "questions/DerechoAdmin/Medio-0003.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4741394,
+          "sha256": "4d0e8088b3bbbaefcb3ef7caa2056d495d544acbb4cc86be0bf0e1665d535c3b"
+        },
+        {
+          "path": "questions/DerechoAdmin/Medio-0004.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4723372,
+          "sha256": "12ce177a4ee83c399f879878954edbc262735217508f40bc99a5b034295702e7"
+        },
+        {
+          "path": "questions/DerechoAdmin/Medio-0005.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4610342,
+          "sha256": "ce8d3e7699180d6e51fad47f73d7662c2ba87766172f2d562dd33d8dcb6fa666"
+        },
+        {
+          "path": "questions/DerechoAdmin/Medio-0006.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4651287,
+          "sha256": "11c75a42b082f98f49e9f0946e2d4fb8eac847b635c78177a433597ec5b42b64"
+        },
+        {
+          "path": "questions/DerechoAdmin/Medio-0007.json",
+          "difficulty": "Medio",
+          "questionCount": 800,
+          "bytes": 3661672,
+          "sha256": "5e1126093ee4a6e894272b7ef2b726c0b962aa574cc47d2476f75084e42096f4"
+        },
+        {
+          "path": "questions/DerechoAdmin/Dificil-0001.json",
+          "difficulty": "Dificil",
+          "questionCount": 1000,
+          "bytes": 4628118,
+          "sha256": "0950c02d1006e5a18d3e608c8520d2bd713423ead036a837f646745a3b915f09"
+        },
+        {
+          "path": "questions/DerechoAdmin/Dificil-0002.json",
+          "difficulty": "Dificil",
+          "questionCount": 1000,
+          "bytes": 4906292,
+          "sha256": "e01c6af081abf51cfb8c78df0d762dc1aa0c8259687d00dccb4fb6f825ed2ba2"
+        },
+        {
+          "path": "questions/DerechoAdmin/Dificil-0003.json",
+          "difficulty": "Dificil",
+          "questionCount": 1000,
+          "bytes": 4724297,
+          "sha256": "9d4362d4d9937656518a7452c12e6e548c97a30cca0d484074d2dc48f10656de"
+        },
+        {
+          "path": "questions/DerechoAdmin/Dificil-0004.json",
+          "difficulty": "Dificil",
+          "questionCount": 400,
+          "bytes": 1821183,
+          "sha256": "e8d9aa97cc042f32d1a29629e85d5ee3fee717a034f3a9b40df439c55a195766"
+        }
+      ]
+    },
+    {
+      "id": "Personal",
+      "index": 3,
+      "name": "Administración de recursos humanos",
+      "questionCount": 10400,
+      "reviewStatus": "auto_validated",
+      "shards": [
+        {
+          "path": "questions/Personal/Facil-0001.json",
+          "difficulty": "Facil",
+          "questionCount": 1000,
+          "bytes": 5006569,
+          "sha256": "2cbbced6be8ce87ea2fdb031341e44db7cd71475faa37cc02c7bed638efeca23"
+        },
+        {
+          "path": "questions/Personal/Facil-0002.json",
+          "difficulty": "Facil",
+          "questionCount": 1000,
+          "bytes": 5038913,
+          "sha256": "db344d2fc6a8977e1f77765e4fcc37fc6eb008241d4b7aa9a54b2f568349c443"
+        },
+        {
+          "path": "questions/Personal/Facil-0003.json",
+          "difficulty": "Facil",
+          "questionCount": 600,
+          "bytes": 3102356,
+          "sha256": "c41d417d58ba3db3af9c3ea8e00fb66ed745bf2e0529d2fc4a7098b3de283f3b"
+        },
+        {
+          "path": "questions/Personal/Medio-0001.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4678314,
+          "sha256": "1c72e01f25890b6a26b99f0828c58765c34a2d54352bd3f5309c6e8556543617"
+        },
+        {
+          "path": "questions/Personal/Medio-0002.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4839750,
+          "sha256": "a3d0ff4802d07e6da5c21722b7aea22e61f189bf19606c97e29ed343b7cda99b"
+        },
+        {
+          "path": "questions/Personal/Medio-0003.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4877332,
+          "sha256": "649f11bb8a751b3fd3fd557def031c07e34b8365671a66759b0f928caadeb3d3"
+        },
+        {
+          "path": "questions/Personal/Medio-0004.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4869022,
+          "sha256": "147586486c871e8c78c67f2dcc9e66e77f7f7a5c08b6f45c982b380105393ce2"
+        },
+        {
+          "path": "questions/Personal/Medio-0005.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4985439,
+          "sha256": "baad7a2c1831e186a2bcb2bb39fa1549d0e6ebc4f49f68a538aa3a8fa80f2b78"
+        },
+        {
+          "path": "questions/Personal/Medio-0006.json",
+          "difficulty": "Medio",
+          "questionCount": 200,
+          "bytes": 1007845,
+          "sha256": "4049da71c861dcbd5ef8f8bcddbfe6864a8534a8c8cf54a6d9a95a70faac1c12"
+        },
+        {
+          "path": "questions/Personal/Dificil-0001.json",
+          "difficulty": "Dificil",
+          "questionCount": 1000,
+          "bytes": 4836738,
+          "sha256": "10195fb2edc9846dc826af76d027da693ef9c3ff2d5eb98ebe78084b6cd318ea"
+        },
+        {
+          "path": "questions/Personal/Dificil-0002.json",
+          "difficulty": "Dificil",
+          "questionCount": 1000,
+          "bytes": 4913139,
+          "sha256": "be1d7b458f2c4780d7d5da2db5fadd606bd58e73502fefbfbaaf849f1aab363f"
+        },
+        {
+          "path": "questions/Personal/Dificil-0003.json",
+          "difficulty": "Dificil",
+          "questionCount": 600,
+          "bytes": 3006884,
+          "sha256": "f5a55bc001dde06bd69acc2ecc110eb0cf0201d6d48e5e4101cbbdca743cea55"
+        }
+      ]
+    },
+    {
+      "id": "Financiera",
+      "index": 4,
+      "name": "Gestión financiera",
+      "questionCount": 10400,
+      "reviewStatus": "auto_validated",
+      "shards": [
+        {
+          "path": "questions/Financiera/Facil-0001.json",
+          "difficulty": "Facil",
+          "questionCount": 1000,
+          "bytes": 4478786,
+          "sha256": "c7eeaae0da04a4e8e73c11e1cce1daef9f2e3889a699e28f16db26ae213af63c"
+        },
+        {
+          "path": "questions/Financiera/Facil-0002.json",
+          "difficulty": "Facil",
+          "questionCount": 1000,
+          "bytes": 4421319,
+          "sha256": "a339272856bcfb6afdfcc760707893a3145fb6ad2e1ced78485aa7b5b2accfa3"
+        },
+        {
+          "path": "questions/Financiera/Facil-0003.json",
+          "difficulty": "Facil",
+          "questionCount": 600,
+          "bytes": 2826998,
+          "sha256": "381e2c5a8978b1395cb88fb37b52f2b50f53595d579bebc8e34ae0c8f4cca60b"
+        },
+        {
+          "path": "questions/Financiera/Medio-0001.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4255921,
+          "sha256": "be8a6d2f3f7d94f68bb33e601ff9da3a04f302bedb1e3d0ce8903d616cc6ae41"
+        },
+        {
+          "path": "questions/Financiera/Medio-0002.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4328260,
+          "sha256": "fec91a1a51691268df8446c74e3673da44a12087a2ee8c6fbb8f86717743c2be"
+        },
+        {
+          "path": "questions/Financiera/Medio-0003.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4313277,
+          "sha256": "a5c4cef95891a6238067bf2e3f7cb0feb20a8c8eb135e8cdde54a52323a2b677"
+        },
+        {
+          "path": "questions/Financiera/Medio-0004.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4422979,
+          "sha256": "d86cc107d155605d2a38e865bcb08ee532a66599def912dbbab75a73fc71c768"
+        },
+        {
+          "path": "questions/Financiera/Medio-0005.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4600464,
+          "sha256": "54793f16f21cb01f5294f5e714c3e71023799e88dfcd05a48f7bef9bf330c097"
+        },
+        {
+          "path": "questions/Financiera/Medio-0006.json",
+          "difficulty": "Medio",
+          "questionCount": 200,
+          "bytes": 916580,
+          "sha256": "a424bd2a291a8d74f8ffda9f3c04104223c77a60b84172e793e02a617430d50a"
+        },
+        {
+          "path": "questions/Financiera/Dificil-0001.json",
+          "difficulty": "Dificil",
+          "questionCount": 1000,
+          "bytes": 4485636,
+          "sha256": "61919a3da6d27c2b29023c4edd9f22d24d97675e7cfbfa14813551779d79ca04"
+        },
+        {
+          "path": "questions/Financiera/Dificil-0002.json",
+          "difficulty": "Dificil",
+          "questionCount": 1000,
+          "bytes": 4397769,
+          "sha256": "6974ca31ac5ee6f41ca4ae23bd4cc2ae7e3dc731a6a726d8936deae4ef0fc903"
+        },
+        {
+          "path": "questions/Financiera/Dificil-0003.json",
+          "difficulty": "Dificil",
+          "questionCount": 600,
+          "bytes": 2806941,
+          "sha256": "90a5d9487109e81649b610b814c23d8a3965ca66d8ece9314ec6f753a8102b93"
+        }
+      ]
+    },
+    {
+      "id": "Informatica",
+      "index": 5,
+      "name": "Informática básica y ofimática",
+      "questionCount": 27200,
+      "reviewStatus": "auto_validated",
+      "shards": [
+        {
+          "path": "questions/Informatica/Facil-0001.json",
+          "difficulty": "Facil",
+          "questionCount": 1000,
+          "bytes": 4420784,
+          "sha256": "a4a0f2f8f3cd3d900aef4c84912cca7e0bef0fa5ba1ed4e61531ddb6bce0a101"
+        },
+        {
+          "path": "questions/Informatica/Facil-0002.json",
+          "difficulty": "Facil",
+          "questionCount": 1000,
+          "bytes": 4374592,
+          "sha256": "408c6dd57646b0cb285170bc492b0a87ef57787ae7fd9167216f209fcdbce049"
+        },
+        {
+          "path": "questions/Informatica/Facil-0003.json",
+          "difficulty": "Facil",
+          "questionCount": 1000,
+          "bytes": 4348557,
+          "sha256": "30628b3fb51dea84d995008db2ef49d03ce28f7b96ecb1b4e2f7f6c7e1afffbe"
+        },
+        {
+          "path": "questions/Informatica/Facil-0004.json",
+          "difficulty": "Facil",
+          "questionCount": 1000,
+          "bytes": 4980981,
+          "sha256": "64fda28a73c00a02e46d71360da9d52854a1ce7c01686a068a956f2c0bd0ac8d"
+        },
+        {
+          "path": "questions/Informatica/Facil-0005.json",
+          "difficulty": "Facil",
+          "questionCount": 1000,
+          "bytes": 5153756,
+          "sha256": "c158a8eca28baec93667e8106c3733a8b0514b92363ea2722d2e09e4eb84beed"
+        },
+        {
+          "path": "questions/Informatica/Facil-0006.json",
+          "difficulty": "Facil",
+          "questionCount": 1000,
+          "bytes": 5217208,
+          "sha256": "5df9e028fafe1b781757a44d88170906c0c2fb8e07fcfc4a995708fd3435aacc"
+        },
+        {
+          "path": "questions/Informatica/Facil-0007.json",
+          "difficulty": "Facil",
+          "questionCount": 800,
+          "bytes": 4367870,
+          "sha256": "5367a99154bfe770bc91f8e2f3a768da46297ec5834deff7a889326143ab8509"
+        },
+        {
+          "path": "questions/Informatica/Medio-0001.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4037843,
+          "sha256": "a803597f90cc3e3f3d0e6927ff2b7fb97a73d0e300e54d78b4db50d5740dabc1"
+        },
+        {
+          "path": "questions/Informatica/Medio-0002.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4616526,
+          "sha256": "bbbf7b2ce990b49736fce096703deb9051e22b0f0121734a865cef91c272c520"
+        },
+        {
+          "path": "questions/Informatica/Medio-0003.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4397158,
+          "sha256": "ac7290098cfadeedcd8bb6d32beeb91d9ea6f222c6a24e3b0b5686dc3e6eecb2"
+        },
+        {
+          "path": "questions/Informatica/Medio-0004.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4436944,
+          "sha256": "7838765510027b33ce538841985728d8d6b4796eddcf013c1a9535477f2c33d1"
+        },
+        {
+          "path": "questions/Informatica/Medio-0005.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4326179,
+          "sha256": "1559774f8d788c876dc4a928e44564ace329e91e7e9c17ff04f8efdb76a6fe1f"
+        },
+        {
+          "path": "questions/Informatica/Medio-0006.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4471803,
+          "sha256": "a62790252c85922a61a713a0a66801d27caf20a030c3f6947502d1b49f4b6d10"
+        },
+        {
+          "path": "questions/Informatica/Medio-0007.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4824457,
+          "sha256": "bd4d4a005be9383a86fa953c759ff45faab9f99c7727b606c9dde4818dfabfdc"
+        },
+        {
+          "path": "questions/Informatica/Medio-0008.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4808693,
+          "sha256": "4b7a496aa4de1a715c715a1e00a1a45ed5f1ad5b4668671af1b39bd2ef281a30"
+        },
+        {
+          "path": "questions/Informatica/Medio-0009.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 5260108,
+          "sha256": "d89655812fb078c78eb830bafeead8bc8fa4b2e402ec6c175785619e8973d379"
+        },
+        {
+          "path": "questions/Informatica/Medio-0010.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4688733,
+          "sha256": "e72709eacde7232a790a5e32c89b2cea73aeddaac20514b21cb86ac9c4930a5c"
+        },
+        {
+          "path": "questions/Informatica/Medio-0011.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 4786218,
+          "sha256": "858f6de885a133e11371abc6e2534ee40d1fef5c8bd03d0f4ba2fc2e1a4e6ee4"
+        },
+        {
+          "path": "questions/Informatica/Medio-0012.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 5303272,
+          "sha256": "039ec7357743e263eb8a63135f7c3c91ec59830743cbc9f8ef7d2a85ff54eeb3"
+        },
+        {
+          "path": "questions/Informatica/Medio-0013.json",
+          "difficulty": "Medio",
+          "questionCount": 1000,
+          "bytes": 5237679,
+          "sha256": "9f88a26ef3d3aacad8de3679a4405e6df8188577d63990aed92a1f859a86b663"
+        },
+        {
+          "path": "questions/Informatica/Medio-0014.json",
+          "difficulty": "Medio",
+          "questionCount": 600,
+          "bytes": 3219219,
+          "sha256": "397f2d4e6ead5536f58fedba6ec74bc857a5cc9e005575f104d8517d81dbda12"
+        },
+        {
+          "path": "questions/Informatica/Dificil-0001.json",
+          "difficulty": "Dificil",
+          "questionCount": 1000,
+          "bytes": 4284992,
+          "sha256": "5c54601017c45e0a1aa4da9444fdd092a412021eea903e7b3f573c8c4c2b3db2"
+        },
+        {
+          "path": "questions/Informatica/Dificil-0002.json",
+          "difficulty": "Dificil",
+          "questionCount": 1000,
+          "bytes": 4209732,
+          "sha256": "ec4b301e430112d26a31dca40958da7514b802f5a9c6b5b61ab417107671f0b6"
+        },
+        {
+          "path": "questions/Informatica/Dificil-0003.json",
+          "difficulty": "Dificil",
+          "questionCount": 1000,
+          "bytes": 4193984,
+          "sha256": "ae9d1dc39888398f3c693c29d5b933ba3eab4a27c7374a8b2345a862f1155cad"
+        },
+        {
+          "path": "questions/Informatica/Dificil-0004.json",
+          "difficulty": "Dificil",
+          "questionCount": 1000,
+          "bytes": 4909252,
+          "sha256": "3bc66d82e6d43f59db7377ec9ca398351a41cbd84dfd1d9e44906abf333afc69"
+        },
+        {
+          "path": "questions/Informatica/Dificil-0005.json",
+          "difficulty": "Dificil",
+          "questionCount": 1000,
+          "bytes": 5006086,
+          "sha256": "b95135ffe2ddaf639c2dbf848b1b8c34f2ad4d2b76f173d815dc4162a70d27ba"
+        },
+        {
+          "path": "questions/Informatica/Dificil-0006.json",
+          "difficulty": "Dificil",
+          "questionCount": 1000,
+          "bytes": 5019295,
+          "sha256": "4928beabf442c40c4d62560d5866ca56b60f0aca6fdc04e3279952ecf8939587"
+        },
+        {
+          "path": "questions/Informatica/Dificil-0007.json",
+          "difficulty": "Dificil",
+          "questionCount": 800,
+          "bytes": 4106135,
+          "sha256": "709ea4bc7e4a77739d22c39c9b9467e4bc6829c03d80667a9adc107d2c462610"
+        }
+      ]
+    }
+  ]
+}
